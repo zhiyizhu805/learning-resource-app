@@ -3,7 +3,7 @@
     <form @submit.prevent="submitData">
       <div class="form-control">
         <label for="title">Title</label>
-        <input type="text" name="title" id="title" ref="title" />
+        <input type="text" name="title" id="title" ref="enterdTitle" />
       </div>
       <div class="form-control">
         <label for="description">Description</label>
@@ -12,12 +12,12 @@
           name="description"
           id="description"
           rows="3"
-          ref="description"
+          ref="enterdDescription"
         />
       </div>
       <div class="form-control">
         <label for="link">Link</label>
-        <input type="url" name="link" id="link" ref="link" />
+        <input type="url" name="link" id="link" ref="enterdLink" />
       </div>
       <div>
         <base-button type="submit">Add Resource</base-button>
@@ -32,9 +32,9 @@ export default {
     submitData() {
       this.$emit(
         'add-resource-item',
-        this.$refs.title.value,
-        this.$refs.description.value,
-        this.$refs.link.value
+        this.$refs.enterdTitle.value,
+        this.$refs.enterdDescription.value,
+        this.$refs.enterdLink.value
       );
     },
   },
