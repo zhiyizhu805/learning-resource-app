@@ -9,7 +9,7 @@
       >Add Resources</base-button
     >
   </base-card>
-  <component :is="seletedTab"></component>
+  <component :is="seletedTab" @add-resource-item = "addResourceItem"></component>
 </template>
 
 <script>
@@ -57,6 +57,16 @@ export default {
     setSelectedTab(tab) {
       this.seletedTab = tab;
     },
+    addResourceItem(title,description,link){
+        const newResourceItem = {
+            id : title,
+            title : title,
+            description: description,
+            link : link 
+        }
+        this.storedResources.unshift(newResourceItem)
+
+    }
   },
 };
 </script>
