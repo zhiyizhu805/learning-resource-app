@@ -1,24 +1,24 @@
 <template>
-    <li>
-        <div>
-            <header>
-                <h3>{{resource.title}}</h3>
-                <button>Delete</button>
-            </header>
-        </div>
-        <p>{{resource.description}}</p>
-        <nav>
-            <!-- use v-bind for dynamic attributes -->
-            <a :href="resource.link">View Resource</a>
-        </nav>
-    </li>
+  <li>
+    <base-card>
+      <header>
+        <h3>{{ resource.title }}</h3>
+        <base-button mode="flat">Delete</base-button>
+      </header>
+      <p>{{ resource.description }}</p>
+      <nav>
+        <!-- use v-bind for dynamic attributes -->
+        <a :href="resource.link">View Resource</a>
+      </nav>
+    </base-card>
+  </li>
 </template>
 
 <script>
 export default {
-    //2) forget to pass props down from parent component
-    props:['resource']
-}
+  //2) forget to pass props down from parent component
+  props: ['resource'],
+};
 </script>
 
 <style scoped>
