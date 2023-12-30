@@ -28,10 +28,18 @@
 
 <script>
 export default {
+    inject:['addResourceItem'],
   methods: {
     submitData() {
-      this.$emit(
-        'add-resource-item',
+    // instead of emitting a custom event ,we can use provide/inject
+    // to call the provided function here.
+    //   this.$emit(
+    //     'add-resource-item',
+    //     this.$refs.enterdTitle.value,
+    //     this.$refs.enterdDescription.value,
+    //     this.$refs.enterdLink.value
+    //   );
+      this.addResourceItem(
         this.$refs.enterdTitle.value,
         this.$refs.enterdDescription.value,
         this.$refs.enterdLink.value

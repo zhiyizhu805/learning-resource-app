@@ -2,23 +2,29 @@
   <base-card>
     <!-- attribut fall through -->
     <!-- dynamically bind mode prop with computed property -->
-    <base-button @click="setSelectedTab('stored-resources')" :mode="storedResButtonMode" 
+    <base-button
+      @click="setSelectedTab('stored-resources')"
+      :mode="storedResButtonMode"
       >Stored Resources</base-button
     >
-    <base-button @click="setSelectedTab('add-resource')" :mode="addResButtonMode"
+    <base-button
+      @click="setSelectedTab('add-resource')"
+      :mode="addResButtonMode"
       >Add Resources</base-button
     >
   </base-card>
-  <component :is="seletedTab" @add-resource-item = "addResourceItem"></component>
+  <keep-alive>
+    <component :is="seletedTab"></component>
+  </keep-alive>
 </template>
 
 <script>
 import StoredResources from './StoredResources.vue';
-import AddResource from './AddResource.vue'
+import AddResource from './AddResource.vue';
 export default {
   components: {
     StoredResources,
-    AddResource
+    AddResource,
   },
   data() {
     return {
@@ -39,34 +45,34 @@ export default {
       ],
     };
   },
-    provide() {
+  provide() {
     return {
       resources: this.storedResources,
+      addResourceItem: this.addResourceItem,
     };
   },
-  computed:{
-    storedResButtonMode(){
-        return this.seletedTab === 'stored-resources' ? null : 'flat'
+  computed: {
+    storedResButtonMode() {
+      return this.seletedTab === 'stored-resources' ? null : 'flat';
     },
-    addResButtonMode(){
-        return this.seletedTab === 'add-resource' ? null : 'flat'
-
-    }
+    addResButtonMode() {
+      return this.seletedTab === 'add-resource' ? null : 'flat';
+    },
   },
   methods: {
     setSelectedTab(tab) {
       this.seletedTab = tab;
     },
-    addResourceItem(title,description,link){
-        const newResourceItem = {
-            id : title,
-            title : title,
-            description: description,
-            link : link 
-        }
-        this.storedResources.unshift(newResourceItem)
-
-    }
+    addResourceItem(title, description, url) {
+      const newResourceItem = {
+        id: new Date().toISOString(),
+        title: title,
+        description: description,
+        url: url,
+      };
+      this.storedResources.unshift(newResourceItem);
+      this.seletedTab = 'stored-resources';
+    },
   },
 };
 </script>
