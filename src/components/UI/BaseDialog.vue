@@ -1,36 +1,36 @@
 <template>
-<!-- the div make the background grey out -->
-  <div @click="$emit('close')">
-    <dialog open>
-      <header>
-        <slot name="header">
-          <h2>{{ title }}</h2></slot
-        >
-      </header>
-      <section>
-        <slot></slot>
-      </section>
-      <menu>
-        <slot name="action">
-          <base-button @click="emit('close')">Close</base-button>
-        </slot>
-      </menu>
-    </dialog>
-  </div>
+  <teleport to="body">
+    <!-- backdrop: the div make the background grey out -->
+    <div @click="$emit('close')"></div>
+      <dialog open>
+        <header>
+          <slot name="header">
+            <h2>{{ title }}</h2></slot
+          >
+        </header>
+        <section>
+          <slot></slot>
+        </section>
+        <menu>
+          <slot name="action">
+            <base-button @click="emit('close')">Close</base-button>
+          </slot>
+        </menu>
+      </dialog>
+  </teleport>
 </template>
 
 <script>
 export default {
-  emit:['close'],
+  emit: ['close'],
   props: {
-    title:{
+    title: {
       type: String,
-      required: false
-    }
-  }
-}
+      required: false,
+    },
+  },
+};
 </script>
-
 
 <style scoped>
 div {
