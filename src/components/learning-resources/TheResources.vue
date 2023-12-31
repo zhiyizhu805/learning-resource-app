@@ -49,6 +49,7 @@ export default {
     return {
       resources: this.storedResources,
       addResourceItem: this.addResourceItem,
+      removeResource:this.removeResource
     };
   },
   computed: {
@@ -73,6 +74,14 @@ export default {
       this.storedResources.unshift(newResourceItem);
       this.seletedTab = 'stored-resources';
     },
-  },
+    removeResource(id){
+    //   when you use provide/inject approach, DO NOT create a new array since the new array will not be 're-provide' to other componenent,
+    //   so you cannot use filer method.
+    //  this.storedResources = this.storedResources.filter(res=>res.id != id)
+    
+    //splice will work on the orignal array.
+    const resIndex = this.storedResources.findIndex(res=>res.id === id)
+    this.storedResources.splice(resIndex,1)
+  },}
 };
 </script>
