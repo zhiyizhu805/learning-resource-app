@@ -1,4 +1,11 @@
 <template>
+  <base-dialog v-if="inputIsInvalid" title="Invalid Input" @close="closeDialog">
+    <template #default>
+      <p>Please complete all fields.</p>
+      <p>Thank you!</p>
+    </template>
+  </base-dialog>
+  
   <base-card>
     <form @submit.prevent="submitData">
       <div class="form-control">
@@ -28,22 +35,37 @@
 
 <script>
 export default {
-    inject:['addResourceItem'],
+  inject: ['addResourceItem'],
+  data() {
+    return {
+      inputIsInvalid: false,
+    };
+  },
   methods: {
     submitData() {
-    // instead of emitting a custom event ,we can use provide/inject
-    // to call the provided function here.
-    //   this.$emit(
-    //     'add-resource-item',
-    //     this.$refs.enterdTitle.value,
-    //     this.$refs.enterdDescription.value,
-    //     this.$refs.enterdLink.value
-    //   );
-      this.addResourceItem(
-        this.$refs.enterdTitle.value,
-        this.$refs.enterdDescription.value,
-        this.$refs.enterdLink.value
-      );
+      const enteredTitle = this.$refs.enterdTitle.value;
+      const enteredDescription = this.$refs.enterdDescription.value;
+      const enteredLink = this.$refs.enterdLink.value;
+      if (
+        enteredTitle.trim() === '' ||
+        enteredDescription.trim() === '' ||
+        enteredLink.trim() === ''
+      ) {
+        this.inputIsInvalid = true;
+        return;
+      }
+      // instead of emitting a custom event ,we can use provide/inject
+      // to call the provided function here.
+      //   this.$emit(
+      //     'add-resource-item',
+      //     this.$refs.enterdTitle.value,
+      //     this.$refs.enterdDescription.value,
+      //     this.$refs.enterdLink.value
+      //   );
+      this.addResourceItem(enteredTitle, enteredDescription, enteredLink);
+    },
+    closeDialog() {
+      this.inputIsInvalid = !this.inputIsInvalid;
     },
   },
 };
